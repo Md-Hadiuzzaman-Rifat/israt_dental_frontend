@@ -1,0 +1,14 @@
+.card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+.card-section {
+  line-height: 2rem;
+  padding: 1.25rem;
+  flex-shrink: 1;
+  flex-grow: 1;
+
+  box-shadow: 10px 20px 10px rgba(0, 0, 0, 0.1);
+}

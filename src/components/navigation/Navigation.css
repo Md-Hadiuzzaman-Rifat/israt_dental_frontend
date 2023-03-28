@@ -1,0 +1,23 @@
+.navigation {
+  background-color: slategray;
+}
+li {
+  list-style-type: none;
+  display: inline-block;
+  padding: 10px 25px;
+  color: white;
+}
+li h3 {
+  color: white;
+}
+a {
+  text-decoration: none;
+  color: white;
+  font-size: 24px;
+}
+.navigation_flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
