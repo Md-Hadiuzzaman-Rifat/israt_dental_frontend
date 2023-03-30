@@ -8,7 +8,7 @@ const Login = () => {
   const [password,setPassword]=useState("")
   const [email,setEmail]=useState("")
 
-  const {login} =useAuth()
+  const {login, googleSignIn} =useAuth()
   const navigate=useNavigate()
 
   async function handleSubmit(e){
@@ -27,11 +27,14 @@ const Login = () => {
   return (
     <div>
       <h2>Login Page</h2>
+      <br /><br />
       <form onSubmit={handleSubmit}>
         <input type="email"  name="email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
         <input type="password"  name="password"  value={password} onChange={(e)=>setPassword(e.target.value) }/>
-        <Link to="/signup"> <p style={{color:"blue",fontSize:"1.2rem"}}>Signup Instead</p> </Link>
         <button disabled={loading} type="submit">Login</button>
+        <Link to="/signup"> <p style={{color:"blue",fontSize:"1.2rem"}}>Signup Instead</p> </Link>
+        <p>------------------------</p>
+        <button style={{backgroundColor:"blue"}} onClick={googleSignIn}>Google SignIn</button>
       </form>
     </div>
   );
