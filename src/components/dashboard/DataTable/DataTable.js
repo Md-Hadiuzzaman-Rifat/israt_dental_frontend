@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import * as React from 'react';
+import { Link } from "react-router-dom";
 
 export default function DataTable({appointments}) {
   return (
@@ -17,12 +18,13 @@ export default function DataTable({appointments}) {
             <TableCell style={{color:'white',fontWeight:'bold'}}>Schedule</TableCell>
             <TableCell style={{color:'white',fontWeight:'bold'}}>Service</TableCell>
             <TableCell style={{color:'white',fontWeight:'bold'}}>Phone</TableCell>
+            <TableCell style={{color:'white',fontWeight:'bold'}}>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {appointments.map((row,index) => (
+          {appointments.map((row) => (
             <TableRow
-              key={index}
+              key={row._id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -37,7 +39,8 @@ export default function DataTable({appointments}) {
               <TableCell component="th" scope="row">
                 {row.phone}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
+              
+              <TableCell><Link style={{color:"blue"}} to={`/appointment/bookingPayment/${row._id}`} >Pay Now</Link> </TableCell>
             </TableRow>
           ))}
         </TableBody>

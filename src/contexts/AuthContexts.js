@@ -14,6 +14,7 @@ import { initializeFirebaseApp } from "../firebase/firebase.initialize";
 initializeFirebaseApp();
 const AuthContext = React.createContext();
 
+// useAuth
 export function useAuth() {
   return useContext(AuthContext);
 }

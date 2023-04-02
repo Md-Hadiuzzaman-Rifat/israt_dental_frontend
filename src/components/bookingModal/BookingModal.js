@@ -9,7 +9,6 @@ import * as React from "react";
 import { useAuth } from "../../contexts/AuthContexts";
 import "./BookingModal.css";
 
-
 const Fade = React.forwardRef(function Fade(props, ref) {
   const {
     children,
@@ -63,30 +62,50 @@ const style = {
   p: 4,
 };
 
-export default function BookingModal({ handleClose, open, date, schedule, service}) {
+export default function BookingModal({
+  handleClose,
+  open,
+  date,
+  schedule,
+  service,
+  fee
+}) {
+  const weekday = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
-  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const { currentUser } = useAuth();
+  const [email, setEmail] = React.useState(currentUser.email);
+  const [phone, setPhone] = React.useState();
+  const [name, setName] = React.useState(currentUser.displayName);
 
-  const {currentUser}=useAuth()
-  const [email,setEmail]=React.useState(currentUser.email)
-  const [phone,setPhone]=React.useState()
-  const [name,setName]=React.useState(currentUser.displayName)
-
-  const bookingSubmit=()=>{
-    const patientDetails={
-      name,phone,email,date:date.toLocaleDateString(),schedule,service
-    }
-    fetch(`http://localhost:2020/appointments`,{
-      method:'POST',
-      headers:{
-        'content-type':'application/json'
+  const bookingSubmit = () => {
+    const patientDetails = {
+      name,
+      phone,
+      email,
+      date: date.toLocaleDateString(),
+      schedule,
+      service,
+      fee
+    };
+    fetch(`http://localhost:2020/appointments`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
       },
-      body:JSON.stringify(patientDetails)
-    })
-    alert("Booking is successful")
-    console.log(patientDetails)
-    handleClose()
-  }
+      body: JSON.stringify(patientDetails),
+    });
+    alert("Booking is successful");
+    console.log(patientDetails);
+    handleClose();
+  };
 
   return (
     <div>
@@ -105,11 +124,25 @@ export default function BookingModal({ handleClose, open, date, schedule, servic
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Typography id="spring-modal-title" style={{color:"#29b6f6", textAlign:"center", fontWeight:"bold"}} variant="h6" component="h6">
+            <Typography
+              id="spring-modal-title"
+              style={{
+                color: "#29b6f6",
+                textAlign: "center",
+                fontWeight: "bold",
+              }}
+              variant="h6"
+              component="h6"
+            >
               {date.toLocaleDateString()}: {weekday[date.getDay()]}
             </Typography>
-            <Typography style={{textAlign:"center"}} id="spring-modal-title" variant="h6" component="h3">
-                Click Confirm to Set Appointment
+            <Typography
+              style={{ textAlign: "center" }}
+              id="spring-modal-title"
+              variant="h6"
+              component="h3"
+            >
+              Click Confirm to Set Appointment
             </Typography>
             <br />
             <TextField
@@ -140,7 +173,7 @@ export default function BookingModal({ handleClose, open, date, schedule, servic
               label="Enter Name"
               variant="standard"
               value={name}
-              onChange={(e)=>setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               required
             />
             <br /> <br />
@@ -161,16 +194,16 @@ export default function BookingModal({ handleClose, open, date, schedule, servic
               label="Enter Phone"
               variant="standard"
               value={phone}
-              onChange={(e)=>setPhone(e.target.value)}
+              onChange={(e) => setPhone(e.target.value)}
               required
             />
-            
             <br />
             <br />
-            <Button onClick={bookingSubmit}>Confirm Book </Button>
+              <Button onClick={bookingSubmit}>Confirm Book </Button>
           </Box>
         </Fade>
       </Modal>
     </div>
   );
 }
+// 

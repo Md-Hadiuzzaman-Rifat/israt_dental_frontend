@@ -3,12 +3,12 @@
   flex-direction: row;
   flex-wrap: wrap;
   gap: 2rem;
+  justify-content: space-evenly;
 }
 .card-section {
   line-height: 2rem;
   padding: 1.25rem;
   flex-shrink: 1;
-  flex-grow: 1;
-
+  flex-grow: 0;
   box-shadow: 10px 20px 10px rgba(0, 0, 0, 0.1);
 }

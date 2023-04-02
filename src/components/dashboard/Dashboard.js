@@ -17,26 +17,29 @@ import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import * as React from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContexts";
 import Calendar from "../calendar/Calendar";
 import DataTable from "./DataTable/DataTable";
 
-
 const drawerWidth = 240;
 
 function Dashboard(props) {
-    const {currentUser}=useAuth()
+  const { currentUser } = useAuth();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [value, setValue] = React.useState(dayjs(new Date()));
-  const [appointments,setAppointments]=React.useState([])
-  const email=currentUser.email
+  const [appointments, setAppointments] = React.useState([]);
+  const email = currentUser.email;
 
-fetch(`http://localhost:2020/appointments?email=${email}&date=${value.$d.toLocaleDateString()}`)
-
-    .then(res=>res.json())
-    .then(data=>setAppointments(data))
+  useEffect(() => {
+    fetch(
+      `http://localhost:2020/appointments?email=${email}&date=${value.$d.toLocaleDateString()}`
+    )
+      .then((res) => res.json())
+      .then((data) => setAppointments(data));
+  }, [email, value]);
 
   const handleChange = (newValue) => {
     setValue(newValue);
@@ -49,7 +52,9 @@ fetch(`http://localhost:2020/appointments?email=${email}&date=${value.$d.toLocal
   const drawer = (
     <div>
       <Toolbar />
-      <Link style={{color:"blue"}} to="/appointment">Appointment</Link>
+      <Link style={{ color: "blue" }} to="/appointment">
+        Appointment
+      </Link>
       <Divider />
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
