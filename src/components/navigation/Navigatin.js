@@ -17,7 +17,7 @@ const Navigatin = () => {
             <Link to="/appointment">Appointment</Link>
           </li>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/dashboard/dashboardSchedule">Dashboard</Link>
           </li>
         </div>
 

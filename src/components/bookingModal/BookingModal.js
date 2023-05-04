@@ -103,7 +103,7 @@ export default function BookingModal({
       body: JSON.stringify(patientDetails),
     });
     alert("Booking is successful");
-    console.log(patientDetails);
+    // console.log(patientDetails);
     handleClose();
   };
 

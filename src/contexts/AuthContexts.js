@@ -22,6 +22,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
+  const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
     const auth = getAuth();
@@ -32,6 +33,14 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
+  // check the user is admin or not
+  useEffect(()=>{
+    fetch(`http://localhost:2020/users/makeAdmin/${currentUser?.email}`)
+    .then(res=>res.json())
+    .then(res=>console.log(res.admin))
+    .then(data=>setAdmin(data.admin))
+  },[currentUser])
+
   // google SingIn
   async function googleSignIn(){
    try{
@@ -39,7 +48,8 @@ export function AuthProvider({ children }) {
     const auth=getAuth()
     const result=await signInWithPopup(auth,provider)
     const user=result.user
-
+    console.log(user, user.displayName, user.email)
+    // save user in authentication database
     saveUser(user.email,user.displayName, 'PUT')
    }catch{
     console.log("Failed to sign in using Google.")
@@ -50,8 +60,9 @@ export function AuthProvider({ children }) {
   async function signup(email, password, username) {
     const auth = getAuth();
     await createUserWithEmailAndPassword(auth, email, password);
-
+    // save user in authentication database
     saveUser(email,username,'POST')
+
     // update profile
     await updateProfile(auth.currentUser, {
       displayName: username,
@@ -74,6 +85,9 @@ export function AuthProvider({ children }) {
     const auth = getAuth();
     return signOut(auth);
   }
+  
+
+  // A person cant authenticate 2 time using same email.
   const saveUser=(email,displayName,method)=>{
     const user={email,displayName}
     fetch(`http://localhost:2020/users`,{
@@ -90,6 +104,7 @@ export function AuthProvider({ children }) {
     signup,
     googleSignIn,
     login,
+    admin,
     logout,
   };
 

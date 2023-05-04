@@ -22,6 +22,7 @@ const Signup = () => {
         e.preventDefault()
         try{
             setLoading(true)
+            setError(false)
             await signup(email,password,name)
             navigate('/')
             
