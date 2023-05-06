@@ -1,16 +1,34 @@
-import { Textarea } from "@mui/joy";
-import React from "react";
+import { Alert, Textarea } from "@mui/joy";
+import React, { useState } from "react";
 import { useAuth } from "../../../contexts/AuthContexts";
 import Button from "../../button/Button";
 
 const MakeAdmin = () => {
-  const { admin } = useAuth();
+  const { admin, email, token } = useAuth();
+  const [adminEmail,setAdminEmail]=useState('')
+  const [success,setSuccess]=useState(false)
 
-  // console.log(email)
 
-  async function handleSubmit(e){
+  function handleSubmit(e){
+    console.log(token)
+    fetch('http://localhost:2020/users/makeAdmin', {
+        method: 'PUT',
+        headers: {
+            'authorization': `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({email:adminEmail})
+    })
+        .then(res => res.json())
+        .then(data => {
+          if (data.modifiedCount) {
+              console.log(data);
+              setAdminEmail('')
+              setSuccess(true);
+          }
+      })
+
     e.preventDefault()
-    console.log("Hello World.")
   }
 
   return (
@@ -25,12 +43,14 @@ const MakeAdmin = () => {
             placeholder="Add Email"
             variant="outlined"
             type="email"
+            onChange={(e)=>setAdminEmail(e.target.value)}
           />{" "}
           <br />
         </div>
         <Button type="submit">Add Admin</Button>
       </form>
-      
+      <br />
+      {success && <Alert severity="success">Made Admin successfully!</Alert>}
     </div>
   );
 };

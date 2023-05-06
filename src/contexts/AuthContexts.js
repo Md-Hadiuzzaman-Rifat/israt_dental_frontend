@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  getIdToken,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -23,12 +24,16 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
   const [admin, setAdmin] = useState(false);
+  const [token,setToken]=useState()
 
+  // onAuth State Change
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
+      getIdToken(user)
+        .then(idToken=>setToken(idToken))
     });
     return unsubscribe;
   }, []);
@@ -37,7 +42,7 @@ export function AuthProvider({ children }) {
   useEffect(()=>{
     fetch(`http://localhost:2020/users/makeAdmin/${currentUser?.email}`)
     .then(res=>res.json())
-    .then(res=>console.log(res.admin))
+    // .then(res=>console.log(res.admin))
     .then(data=>setAdmin(data.admin))
   },[currentUser])
 
@@ -104,6 +109,7 @@ export function AuthProvider({ children }) {
     signup,
     googleSignIn,
     login,
+    token,
     admin,
     logout,
   };
