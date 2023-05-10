@@ -57,6 +57,15 @@ function Dashboard(props) {
       </Link>
       <Divider />
       <List>
+      <Link to="/">
+          <ListItem disablePadding style={{ color: "black" }}>
+            <ListItemButton>
+              <ListItemIcon></ListItemIcon>
+              <ListItemText primary={"Home"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+
         <Link to="/dashboard/dashboardSchedule">
           <ListItem disablePadding style={{ color: "black" }}>
             <ListItemButton>

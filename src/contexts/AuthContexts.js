@@ -53,7 +53,7 @@ export function AuthProvider({ children }) {
     const auth=getAuth()
     const result=await signInWithPopup(auth,provider)
     const user=result.user
-    console.log(user, user.displayName, user.email)
+    // console.log(user, user.displayName, user.email)
     // save user in authentication database
     saveUser(user.email,user.displayName, 'PUT')
    }catch{
