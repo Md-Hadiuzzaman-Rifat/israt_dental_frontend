@@ -170,7 +170,7 @@ export default function ColorInversionFooter() {
               <Typography textColor="text.tertiary">by</Typography>
             }
           >
-            Ortho Dental
+            Md Hadiuzzaman Rifat
           </Typography>
 
           <Typography level="body3" sx={{ ml: "auto" }}>

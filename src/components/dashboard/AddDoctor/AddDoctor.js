@@ -7,6 +7,8 @@ const AddDoctor = () => {
   const [file, setFile] = React.useState(null);
   const [name, setName]= useState('')
   const [email, setEmail]= useState('')
+  const [success, setSuccess] = useState(false);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,7 +25,16 @@ const AddDoctor = () => {
         body:formData
     })
     .then(res=>res.json())
-    .then(data=>console.log(data))
+    .then(data=>{
+      if(data.insertedId){
+        setSuccess("Doctor added successfully")
+        console.log("Added successfully")
+      }
+    })
+    .catch(err=>console.log(err))
+    setName("")
+    setEmail("")
+    setFile(null)
   };
 
   return (
@@ -40,8 +51,9 @@ const AddDoctor = () => {
           style={{width:"70%"}}
           onChange={(newFile) => setFile(newFile)}
         />
-        <Button type="Submit">Submit Form</Button>
+        <Button type="Submit">Add Doctor</Button>
       </form>
+      {success && <p style={{ color: 'green' }}>{success}</p>}
     </div>
   );
 };
