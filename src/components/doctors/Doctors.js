@@ -22,10 +22,10 @@ export default function Doctors() {
     fetch("http://localhost:2020/doctors")
       .then((res) => res.json())
       .then((data) => setDoctors(data));
-  }, [doctors]);
+  }, []);
 
   return (
-    <Container>
+    <Container style={{marginBottom:"100px"}}>
       <Box sx={{ flexGrow: 1 }}>
         {console.log(doctors)}
 
