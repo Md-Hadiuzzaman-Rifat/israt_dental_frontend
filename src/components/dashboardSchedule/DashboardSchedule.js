@@ -34,15 +34,3 @@ const DashboardSchedule = () => {
 
 export default DashboardSchedule;
 
-
-// import React from 'react';
-
-// const DashboardSchedule = () => {
-//     return (
-//         <div>
-//             <h1>Hello World</h1>
-//         </div>
-//     );
-// };
-
-// export default DashboardSchedule;

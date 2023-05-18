@@ -27,7 +27,6 @@ export default function Doctors() {
   return (
     <Container style={{marginBottom:"100px"}}>
       <Box sx={{ flexGrow: 1 }}>
-        {console.log(doctors)}
 
         <Grid
           container

@@ -10,6 +10,7 @@ import {
   updateProfile
 } from "firebase/auth";
 import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { initializeFirebaseApp } from "../firebase/firebase.initialize";
 
 initializeFirebaseApp();
@@ -25,6 +26,8 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState({});
   const [admin, setAdmin] = useState(false);
   const [token,setToken]=useState()
+
+  const navigate=useNavigate()
 
   // onAuth State Change
   useEffect(() => {
@@ -56,6 +59,7 @@ export function AuthProvider({ children }) {
     // console.log(user, user.displayName, user.email)
     // save user in authentication database
     saveUser(user.email,user.displayName, 'PUT')
+    navigate("/")
    }catch{
     console.log("Failed to sign in using Google.")
    }

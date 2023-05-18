@@ -40,7 +40,7 @@ export default function DataTable({appointments}) {
                 {row.phone}
               </TableCell>
               
-              <TableCell><Link style={{color:"blue"}} to={`/appointment/bookingPayment/${row._id}`} >Pay Now</Link> </TableCell>
+              <TableCell><Link style={{color:"blue"}} to={`/appointment/bookingPayment/${row._id}`} state={{fee:row.fee}}>Pay Now</Link> </TableCell>
             </TableRow>
           ))}
         </TableBody>

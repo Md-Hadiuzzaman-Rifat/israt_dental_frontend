@@ -10,7 +10,6 @@ import Dashboard from "./components/dashboard/Dashboard";
 import MakeAdmin from "./components/dashboard/MakeAdmin/MakeAdmin";
 import DashboardSchedule from "./components/dashboardSchedule/DashboardSchedule";
 import Home from "./components/home/Home";
-import MakePayment from "./components/makePayment/MakePayment";
 import Navigation from "./components/navigation/Navigatin";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import Signup from "./components/signup/Signup";
@@ -29,7 +28,7 @@ const App = () => {
           <Route path="/home" element={<Home />}></Route>
           <Route path="/login" element={<Login></Login>}></Route>
           <Route path="/signup" element={<Signup></Signup>}></Route>
-          <Route path="/makePayment/:paymentId" element={<MakePayment></MakePayment>}></Route>
+          {/* <Route path="/makePayment/:paymentId" element={<MakePayment></MakePayment>}></Route> */}
           
 
           <Route path="/*" element={<PrivateRouter />}>

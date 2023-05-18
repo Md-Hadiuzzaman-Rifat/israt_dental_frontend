@@ -43,7 +43,7 @@ const AddDoctor = () => {
 
       <form onSubmit={handleSubmit}>
         <TextField style={{width:"80%"}} id="standard-basic" label="Enter Name" onChange={(e)=>setName(e.target.value)} variant="standard" />
-        <TextField style={{width:"80%"}} id="standard-basic" label="Enter Email" onChange={(e)=>setEmail(e.target.value)} variant="standard" />
+        <TextField style={{width:"80%", margin:"15px 0"}} id="standard-basic" label="Enter Email" onChange={(e)=>setEmail(e.target.value)} variant="standard" />
         <br />
         <MuiFileInput
           value={file}

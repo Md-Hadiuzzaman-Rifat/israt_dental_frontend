@@ -30,7 +30,7 @@ const Card = ({value}) => {
                     <div key={index}  className='card-section'>
                         <h3>{doctor.Schedule}</h3>
                         <h3>{doctor.work}</h3>
-                        <p>Fee: {doctor.fee}Taka</p>
+                        <p>Fee: {doctor.fee} Dollar</p>
                         <Button onClick={()=>handleOpen(doctor)}>Book Now</Button>
                     </div>
                 ))
