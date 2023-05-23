@@ -82,7 +82,7 @@ export default function BookingModal({
 
   const { currentUser } = useAuth();
   const [email, setEmail] = React.useState(currentUser.email);
-  const [phone, setPhone] = React.useState();
+  const [phone, setPhone] = React.useState("");
   const [name, setName] = React.useState(currentUser.displayName);
 
   const bookingSubmit = () => {
@@ -102,8 +102,8 @@ export default function BookingModal({
       },
       body: JSON.stringify(patientDetails),
     });
-    alert("Booking is successful");
-    // console.log(patientDetails);
+    alert("Booking is successful. Go to Dashboard for payment.");
+    
     handleClose();
   };
 
@@ -191,7 +191,7 @@ export default function BookingModal({
             <TextField
               className="modalTextField"
               id="standard-multiline-flexible"
-              label="Enter Phone"
+              label="Enter Phone" 
               variant="standard"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}

@@ -5,4 +5,4 @@ import firebaseConfig from "./firebase.config";
 export function initializeFirebaseApp(){
     return initializeApp(firebaseConfig);
 }
- 
+  

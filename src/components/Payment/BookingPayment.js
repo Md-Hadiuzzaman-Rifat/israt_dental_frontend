@@ -1,44 +1,3 @@
-// import { Elements } from "@stripe/react-stripe-js";
-// import { loadStripe } from "@stripe/stripe-js";
-// import { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
-// import CheckoutForm from "./CheckoutForm";
-
-// const stripePromise = loadStripe(
-//   "pk_test_51Mr47xIrkfWin5GdgppkRUsrkOaHzHen7OePqx5dmatK2HVEyvY0Kx7wJmskiYNa5m7lRUdjQbNtiFlJqyflNUki00d48f8Gsp"
-// );
-
-// const BookingPayment = () => {
-//   const [patientDetails, setPatientDetails] = useState({});
-//   let params = useParams();
-
-//   useEffect(() => {
-//     fetch(
-//       `http://localhost:2020/appointment/bookingPayment/${params.bookingId}`
-//     )
-//       .then((res) => res.json())
-//       .then((data) => setPatientDetails(data));
-//   }, [params.bookingId]);
-
-//   return (
-//     <div>
-//       <h1>Make Payment</h1>
-//       <br />
-//       <p>Patient Name: {patientDetails.name}</p>
-//       <p>Appointment: {patientDetails.service}</p>
-//       <p>Schedule: {patientDetails.schedule}</p>
-//       <p style={{ color: "blue", marginTop: "25px" }}>
-//         Fee: {patientDetails.fee} Taka
-//       </p>
-//       <Elements stripe={stripePromise}>
-//         <CheckoutForm appointment={patientDetails} id={params.bookingId}/>
-//       </Elements>
-//     </div>
-//   );
-// };
-
-// export default BookingPayment;
-
 import {
   CardElement,
   Elements,
@@ -47,7 +6,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
 import ResetButton from "./ResetButton";
 import SubmitButton from "./SubmitButton";
@@ -112,6 +71,8 @@ const Field = ({
 );
 
 const CheckoutForm = () => {
+  const navigate=useNavigate()
+  let params = useParams();
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -125,28 +86,30 @@ const CheckoutForm = () => {
   });
 
   const location= useLocation()
-  const {fee}=location.state
+  const {fee}=location.state || "/"
+
 
   const handlePayment=()=>{
-    // console.log(billingDetails)
     const body={...billingDetails, fee:fee}
-    fetch("http://localhost:2020/create-payment-intent",{
+     fetch("http://localhost:2020/create-payment-intent",{
       method:"POST",
       headers:{
         "Content-Type":"application/json"
       },
       body:JSON.stringify(body)
-
     })
-    
+    .then(res=>res.json())
+    .then(setTimeout(()=>{
+      navigate('/')
+    },3000))
   }
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
+
       return;
     }
 
@@ -177,6 +140,7 @@ const CheckoutForm = () => {
       setError(payload.error);
     } else {
       setPaymentMethod(payload.paymentMethod);
+
     }
   };
 
@@ -268,16 +232,14 @@ const ELEMENTS_OPTIONS = {
   ],
 };
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe("pk_test_6pRNASCoBOKtIshFeQd4XMUh");
+const stripePromise = loadStripe("pk_test_51Mr47xIrkfWin5GdgppkRUsrkOaHzHen7OePqx5dmatK2HVEyvY0Kx7wJmskiYNa5m7lRUdjQbNtiFlJqyflNUki00d48f8Gsp");
 
 const BookingPayment = () => {
   return (
     <div className="bookingPayment">
       
       <div className="AppWrapper">
-      <h1 style={{marginBottom:"2rem"}}>Enter Payment Information:</h1>
+      <h1 style={{marginBottom:"2rem"}}>Payment Information:</h1>
         <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
           <CheckoutForm />
         </Elements>

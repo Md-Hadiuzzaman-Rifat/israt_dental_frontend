@@ -6,7 +6,7 @@ import "./login.css";
 const Login = () => {
 
   const { state } = useLocation()
-console.log(state.location)
+// console.log(state.location)
 
   const [loading,setLoading]=useState(false)
   const [error,setError]=useState(false)
@@ -22,7 +22,7 @@ console.log(state.location)
       setLoading(true)
       await login(email,password)
       setLoading(false)
-      navigate(state.location)
+      navigate(state?.location ? state.location : "/")
       
     }catch{
       setLoading(false)
