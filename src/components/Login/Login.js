@@ -44,7 +44,6 @@ const Login = () => {
         
       </form>
       <button style={{backgroundColor:"blue"}} onClick={googleSignIn}>Google SignIn</button>
-      
     </div>
   );
 };
