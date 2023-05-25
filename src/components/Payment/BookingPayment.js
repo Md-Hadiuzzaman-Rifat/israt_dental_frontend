@@ -5,13 +5,15 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
 import ResetButton from "./ResetButton";
 import SubmitButton from "./SubmitButton";
 import "./styles/2-Card-Detailed.css";
 import "./styles/common.css";
+
 
 const CARD_OPTIONS = {
   iconStyle: "solid",
@@ -71,7 +73,7 @@ const Field = ({
 );
 
 const CheckoutForm = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   let params = useParams();
   const stripe = useStripe();
   const elements = useElements();
@@ -79,37 +81,33 @@ const CheckoutForm = () => {
   const [cardComplete, setCardComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
+  const [clientSecret, setClientSecret]=useState("")
   const [billingDetails, setBillingDetails] = useState({
     email: "",
     phone: "",
     name: "",
   });
 
-  const location= useLocation()
-  const {fee}=location.state || "/"
+  const location = useLocation();
+  const { fee } = location.state;
 
-
-  const handlePayment=()=>{
-    const body={...billingDetails, fee:fee}
-     fetch("http://localhost:2020/create-payment-intent",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: "http://localhost:2020/create-payment-intent",
+      data: {
+        fee:fee
       },
-      body:JSON.stringify(body)
     })
-    .then(res=>res.json())
-    .then(setTimeout(()=>{
-      navigate('/')
-    },3000))
-  }
+    .then(data=>console.log(data.data.clientSecret))
+    // .then(data=>setClientSecret(data.clientSecret))
+  }, [fee]);
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!stripe || !elements) {
-
       return;
     }
 
@@ -140,7 +138,9 @@ const CheckoutForm = () => {
       setError(payload.error);
     } else {
       setPaymentMethod(payload.paymentMethod);
-
+      setTimeout(()=>{
+        navigate("/")
+      },3000)
     }
   };
 
@@ -217,7 +217,12 @@ const CheckoutForm = () => {
       {error && (
         <ErrorMessage style={{ color: "red" }}>{error.message}</ErrorMessage>
       )}
-      <SubmitButton onClick={handlePayment} processing={processing} error={error} disabled={!stripe}>
+      <SubmitButton
+        onClick={handleSubmit}
+        processing={processing}
+        error={error}
+        disabled={!stripe}
+      >
         Pay: ${fee}
       </SubmitButton>
     </form>
@@ -237,9 +242,8 @@ const stripePromise = loadStripe("pk_test_51Mr47xIrkfWin5GdgppkRUsrkOaHzHen7OePq
 const BookingPayment = () => {
   return (
     <div className="bookingPayment">
-      
       <div className="AppWrapper">
-      <h1 style={{marginBottom:"2rem"}}>Payment Information:</h1>
+        <h1 style={{ marginBottom: "2rem" }}>Payment Information:</h1>
         <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
           <CheckoutForm />
         </Elements>
