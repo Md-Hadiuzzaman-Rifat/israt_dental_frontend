@@ -18,21 +18,22 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Doctors() {
   const [doctors, setDoctors] = useState([]);
-  
+  const [loading ,setLoading]=useState(true)
 
   React.useEffect(() => {
     fetch(
       "https://israt-dental-backend-git-master-md-hadiuzzaman-rifat.vercel.app/doctors"
     )
       .then((res) => res.json())
-      .then((data) => setDoctors(data));
+      .then((data) => setDoctors(data))
+      .then(()=>setLoading(false))
   }, []);
 
   return (
     <Container style={{ marginBottom: "100px" }}>
       <Box sx={{ flexGrow: 1 }}>
-        {!doctors && <CircularProgress />}
-        {doctors && (
+        {loading && <CircularProgress />}
+        {!loading && (
           <Grid
             container
             spacing={{ xs: 2, md: 3 }}
