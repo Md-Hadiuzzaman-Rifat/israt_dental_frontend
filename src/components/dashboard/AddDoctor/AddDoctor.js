@@ -20,7 +20,7 @@ const AddDoctor = () => {
 
     console.log(formData)
 
-    fetch('http://localhost:2020/dashboard/addDoctor',{
+    fetch('https://israt-dental-backend-git-master-md-hadiuzzaman-rifat.vercel.app/dashboard/addDoctor',{
         method:'POST',
         body:formData
     })

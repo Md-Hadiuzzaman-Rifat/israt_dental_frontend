@@ -94,7 +94,7 @@ const CheckoutForm = () => {
   useEffect(() => {
     axios({
       method: "post",
-      url: "http://localhost:2020/create-payment-intent",
+      url: "https://israt-dental-backend-git-master-md-hadiuzzaman-rifat.vercel.app/create-payment-intent",
       data: {
         fee:fee
       },

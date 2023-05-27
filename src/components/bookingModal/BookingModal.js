@@ -95,7 +95,7 @@ export default function BookingModal({
       service,
       fee
     };
-    fetch(`http://localhost:2020/appointments`, {
+    fetch(`https://israt-dental-backend-git-master-md-hadiuzzaman-rifat.vercel.app/appointments`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

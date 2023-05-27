@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -17,30 +18,35 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Doctors() {
   const [doctors, setDoctors] = useState([]);
+  
 
   React.useEffect(() => {
-    fetch("http://localhost:2020/doctors")
+    fetch(
+      "https://israt-dental-backend-git-master-md-hadiuzzaman-rifat.vercel.app/doctors"
+    )
       .then((res) => res.json())
       .then((data) => setDoctors(data));
   }, []);
 
   return (
-    <Container style={{marginBottom:"100px"}}>
+    <Container style={{ marginBottom: "100px" }}>
       <Box sx={{ flexGrow: 1 }}>
-
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-        >
-          {doctors?.map((doctor) => (
-            <Grid item xs={2} sm={4} md={4} key={doctor._id}>
-              <Item>
-                <Doctor doctor={doctor}></Doctor>
-              </Item>
-            </Grid>
-          ))}
-        </Grid>
+        {!doctors && <CircularProgress />}
+        {doctors && (
+          <Grid
+            container
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 4, sm: 8, md: 12 }}
+          >
+            {doctors?.map((doctor) => (
+              <Grid item xs={2} sm={4} md={4} key={doctor._id}>
+                <Item>
+                  <Doctor doctor={doctor}></Doctor>
+                </Item>
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Box>
     </Container>
   );

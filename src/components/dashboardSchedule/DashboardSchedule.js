@@ -15,7 +15,7 @@ const DashboardSchedule = () => {
 
     useEffect(() => {
         fetch(
-          `http://localhost:2020/appointments?email=${email}&date=${value.$d.toLocaleDateString()}`
+          `https://israt-dental-backend-git-master-md-hadiuzzaman-rifat.vercel.app/appointments?email=${email}&date=${value.$d.toLocaleDateString()}`
         )
           .then((res) => res.json())
           .then((data) => setAppointments(data));

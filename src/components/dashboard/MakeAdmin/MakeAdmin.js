@@ -11,7 +11,7 @@ const MakeAdmin = () => {
 
   function handleSubmit(e){
     console.log(token)
-    fetch('http://localhost:2020/users/makeAdmin', {
+    fetch('https://israt-dental-backend-git-master-md-hadiuzzaman-rifat.vercel.app/users/makeAdmin', {
         method: 'PUT',
         headers: {
             'authorization': `Bearer ${token}`,

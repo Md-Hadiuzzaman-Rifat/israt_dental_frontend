@@ -1,13 +1,13 @@
 import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  getIdToken,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  updateProfile
+    createUserWithEmailAndPassword,
+    getAuth,
+    getIdToken,
+    GoogleAuthProvider,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    signOut,
+    updateProfile
 } from "firebase/auth";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -43,7 +43,7 @@ export function AuthProvider({ children }) {
 
   // check the user is admin or not
   useEffect(()=>{
-    fetch(`http://localhost:2020/users/makeAdmin/${currentUser?.email}`)
+    fetch(`https://israt-dental-backend-git-master-md-hadiuzzaman-rifat.vercel.app/users/makeAdmin/${currentUser?.email}`)
     .then(res=>res.json())
     // .then(res=>console.log(res.admin))
     .then(data=>setAdmin(data.admin))
@@ -99,7 +99,7 @@ export function AuthProvider({ children }) {
   // A person cant authenticate 2 time using same email.
   const saveUser=(email,displayName,method)=>{
     const user={email,displayName}
-    fetch(`http://localhost:2020/users`,{
+    fetch(`https://israt-dental-backend-git-master-md-hadiuzzaman-rifat.vercel.app/users`,{
       method:method ,
       headers:{
         'content-type':'application/json'
