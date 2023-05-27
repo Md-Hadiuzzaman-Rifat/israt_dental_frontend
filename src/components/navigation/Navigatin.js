@@ -29,7 +29,8 @@ const Navigatin = () => {
           ) : (
             <div>
               <li>
-                <h3>{currentUser.displayName.split(" ")[0]}</h3>
+                {/* <h3>{currentUser.displayName.length >1 ? currentUser.displayName.split(" ")[1] : currentUser.displayName}</h3> */}
+                <h3>{currentUser.displayName}</h3>
               </li>
               <li style={{cursor:'pointer'}} onClick={logout}> <a>Logout</a> </li>
             </div>

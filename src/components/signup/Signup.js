@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from "../../contexts/AuthContexts";
 import "./Signup.css";
 
-
 const Signup = () => {
 
     const [name,setName]=useState('')
@@ -11,7 +10,7 @@ const Signup = () => {
     const [password,setPassword]=useState('')
     const [confirmPassword,setConfirmPassword]=useState("")
 
-    const [loading,setLoading]=useState()
+    const [loading,setLoading]=useState(true)
     const [error,setError]=useState()
 
     const navigate=useNavigate()
@@ -34,10 +33,10 @@ const Signup = () => {
                     setError(false)
                     await signup(email,password,name)
                     navigate('/')
-                    
                 }catch{
                     setLoading(false)
                     setError("Failed to create Account.")
+                    return
                 }
             }
         }
